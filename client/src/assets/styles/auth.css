@@ -1,0 +1,176 @@
+/* App.css additions for Auth Component - Matching "Coolest Edition" */
+
+/* Re-using variables defined at the top of your App.css */
+/*
+:root {
+  --background-dark: #1a1a2e;
+  --card-dark: #16213e;
+  --text-light: #e0e0e0;
+  --accent-blue: #0f3460;
+  --accent-vibrant: #e94560;
+  --gradient-start: #232946;
+  --gradient-end: #121629;
+}
+*/
+
+/* --- Authentication Section Specifics (Refined to match main theme) --- */
+
+/* The .auth-section class already has the general card-base styles,
+   but we can ensure its flex properties for internal alignment */
+.auth-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Consistent spacing within the auth card */
+  /* Ensure it has max-width and box-shadow from the .card-base mixin in your App.css */
+}
+
+.auth-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Spacing between auth elements */
+}
+
+.auth-input {
+  width: calc(100% - 1px); /* Account for padding */
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.05); /* Subtle transparency */
+  border: 1px solid var(--accent-blue); /* Darker blue border */
+  border-radius: 10px;
+  font-size: 1.1em;
+  color: var(--text-light);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  box-sizing: border-box;
+  /* margin-bottom: 5px; Removed if using gap on container */
+}
+
+.auth-input::placeholder {
+  color: rgba(255, 255, 255, 0.4); /* Lighter placeholder text */
+}
+
+.auth-input:focus {
+  border-color: var(--accent-vibrant); /* Vibrant pink-red on focus */
+  box-shadow: 0 0 15px rgba(233, 69, 96, 0.4); /* Matching glow */
+  background-color: rgba(255, 255, 255, 0.1); /* Slightly brighter on focus */
+  outline: none;
+}
+
+.auth-primary-button,
+.auth-google-button,
+.auth-logout-button {
+  width: 100%; /* Make buttons full width */
+  padding: 16px 25px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.15em;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--card-dark); /* Dark text on vibrant buttons for contrast */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.auth-primary-button {
+  background-color: var(--accent-vibrant); /* Vibrant pink-red */
+  box-shadow: 0 8px 20px rgba(233, 69, 96, 0.4); /* Strong shadow */
+}
+
+.auth-primary-button:hover {
+  background-color: #ff5e7d; /* Slightly lighter on hover */
+  transform: translateY(-4px); /* Consistent lift */
+  box-shadow: 0 12px 25px rgba(233, 69, 96, 0.6); /* More pronounced shadow */
+}
+
+.auth-google-button {
+  background-color: #4285F4; /* Google Blue */
+  color: white; /* White text for Google button */
+  box-shadow: 0 8px 20px rgba(66, 133, 244, 0.4); /* Blue shadow */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.auth-google-button::before {
+  content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path fill="%23FFFFFF" d="M9 3.48c1.86 0 3.24.81 4.19 1.79l2.84-2.76C14.73 1.05 12.33 0 9 0 5.48 0 2.44 2.02.9 5.09l3.05 2.36c.72-2.12 2.76-3.67 5.05-3.67z"/><path fill="%23FFFFFF" d="M17.64 9.2c0-.79-.07-1.46-.17-2.14H9v4.08h4.59c-.21 1.14-.76 2.08-1.57 2.73-.81.65-1.84 1.04-3.02 1.04-2.3 0-4.24-1.55-4.95-3.67L.9 12.91c1.54 3.07 4.58 5.09 8.1 5.09 4.79 0 7.74-3.13 7.74-7.83z"/></svg>'); /* Google logo SVG */
+  width: 18px;
+  height: 18px;
+}
+
+.auth-google-button:hover {
+  background-color: #3b74d4; /* Darker Google blue on hover */
+  transform: translateY(-4px); /* Consistent lift */
+  box-shadow: 0 12px 25px rgba(66, 133, 244, 0.6); /* More pronounced shadow */
+}
+
+.auth-logout-button {
+  background-color: #c0392b; /* A darker, subtle red for logout */
+  color: white; /* White text for logout */
+  box-shadow: 0 8px 20px rgba(192, 57, 43, 0.4); /* Red shadow */
+  margin-top: 20px; /* More space above logout button */
+}
+
+.auth-logout-button:hover {
+  background-color: #e74c3c; /* Brighter red on hover */
+  transform: translateY(-4px); /* Consistent lift */
+  box-shadow: 0 12px 25px rgba(192, 57, 43, 0.6); /* More pronounced shadow */
+}
+
+/* Optional: "OR" separator for email/password section */
+.auth-form-container::before {
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0; /* Consistent vertical spacing */
+  color: var(--text-light); /* Light text color */
+  font-size: 1em;
+  font-weight: 500;
+  opacity: 0.7; /* Slightly muted */
+}
+
+.auth-form-container::before::before,
+.auth-form-container::before::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Subtle light line */
+}
+
+.auth-form-container::before:not(:empty)::before {
+  margin-right: .75em; /* More space around OR */
+}
+
+.auth-form-container::before:not(:empty)::after {
+  margin-left: .75em; /* More space around OR */
+}
+
+/* Responsive adjustments for smaller screens (match App.css media queries) */
+@media (max-width: 768px) {
+  .auth-section {
+    padding: 30px;
+    gap: 15px;
+  }
+  .auth-input,
+  .auth-primary-button,
+  .auth-google-button,
+  .auth-logout-button {
+    padding: 14px 20px;
+    font-size: 1.05em;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-section {
+    padding: 25px;
+    gap: 12px;
+  }
+  .auth-input,
+  .auth-primary-button,
+  .auth-google-button,
+  .auth-logout-button {
+    padding: 12px 18px;
+    font-size: 1em;
+  }
+  .auth-form-container::before {
+    margin: 15px 0;
+  }
+}

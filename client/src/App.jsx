@@ -11,7 +11,7 @@ function App() {
 
   return (
 
-    <Router>
+    <Router basename="/MovieWeb-using-Firebase">
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />

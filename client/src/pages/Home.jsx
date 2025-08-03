@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { searchMovies } from '../config/omdb';
+// Home.jsx
+import { useState, useEffect } from "react";
+import debounce from "lodash/debounce";
+import { searchMovies } from "../config/omdb";
+import MovieCard from "../components/MovieCard"; 
 
 function Home() {
   const [movies, setMovies] = useState([]);
@@ -7,24 +10,26 @@ function Home() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchMovies = debounce(async () => {
+      if (!query) return; 
       setLoading(true);
       const results = await searchMovies(query);
       setMovies(results);
       setLoading(false);
-    };
+    }, 500); // 500ms debounce delay
+
     fetchMovies();
+
+    return () => fetchMovies.cancel();
   }, [query]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] text-white px-4 py-10">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-extrabold text-center mb-6">
-          🎬 Explore Movies
-        </h1>
+    <div className="min-h-screen bg-[#011F4B] text-white py-10 ">
+      <div className="mx-auto ">
+        <h1 className="text-4xl font-extrabold text-center mb-6">🎬 Explore Movies</h1>
 
         {/* Search Input */}
-        <div className="mb-8">
+        <div className="mb-8 mx-12">
           <input
             type="text"
             placeholder="Search for a movie..."
@@ -38,30 +43,9 @@ function Home() {
         {loading ? (
           <p className="text-center text-purple-300">Loading movies...</p>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-x-10 gap-y-20 mx-2">
             {movies.map((movie) => (
-              <div
-                key={movie.imdbID}
-                className="bg-white/10 backdrop-blur-md rounded-2xl p-4 shadow-md hover:shadow-lg transition duration-300"
-              >
-                <img
-                  src={
-                    movie.Poster !== "N/A"
-                      ? movie.Poster
-                      : "https://via.placeholder.com/300x450?text=No+Image"
-                  }
-                  alt={movie.Title}
-                  className="w-full h-64 object-cover rounded-xl mb-3"
-                />
-                <h2 className="text-md font-bold truncate">{movie.Title}</h2>
-                <p className="text-xs text-gray-300">📅 {movie.Year}</p>
-                <p className="text-xs text-yellow-400 mt-1">⭐ {movie.imdbRating || "N/A"}</p>
-                {movie.Plot && (
-                  <p className="text-xs text-gray-400 mt-2 line-clamp-3 italic">
-                    {movie.Plot}
-                  </p>
-                )}
-              </div>
+              <MovieCard key={movie.imdbID} movie={movie} />
             ))}
           </div>
         )}

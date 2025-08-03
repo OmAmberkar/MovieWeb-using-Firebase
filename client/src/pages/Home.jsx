@@ -24,8 +24,8 @@ function Home() {
   }, [query]);
 
   return (
-    <div className="min-h-screen bg-[#011F4B] text-white py-10 ">
-      <div className="mx-auto ">
+    <div className="min-h-screen  bg-gradient-to-l from-[#000000] via-[#011F4B] to-[#000000] text-white py-10 ">
+      <div className="mx-auto mt-20">
         <h1 className="text-4xl font-extrabold text-center mb-6">🎬 Explore Movies</h1>
 
         {/* Search Input */}

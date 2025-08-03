@@ -19,30 +19,45 @@ const Navbar = () => {
       toast.success("Logged out successfully");
       navigate("/");
     } catch (error) {
-       toast.error("Logout failed");
+      toast.error("Logout failed");
     }
   };
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
   return (
-    <nav className="bg-[#1c1c2d] text-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-        {/* Brand */}
-        <Link to="/home" className="text-2xl font-bold text-purple-400">
-          🎬 MovieFinder
-        </Link>
+    <nav className="backdrop-blur-sm text-white h-20 fixed top-0 left-0 right-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
+        {/* Left: Logo */}
+        <div className="flex-shrink-0">
+          <Link to="/home" className="bg-gradient-to-r from-black to-blue-950 text-xl font-bold py-5 px-10 rounded-3xl">
+             MovieFinder
+          </Link>
+        </div>
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex gap-6 items-center">
-          {currentUser ? (
+        {/* Center: Main Nav */}
+        <div className="hidden md:flex gap-10 items-center mx-auto bg-gradient-to-l from-black via-blue-950 to-black py-5 px-10 rounded-3xl">
+          {currentUser && (
             <>
               <Link to="/home" className="hover:text-purple-300">Home</Link>
               <Link to="/favorites" className="hover:text-purple-300">Favorites</Link>
-              <Link to="/profile" className="hover:text-purple-300">Profile</Link>
+            </>
+          )}
+        </div>
+
+        {/* Right: Profile or Auth */}
+        <div className="hidden md:flex items-center gap-4 bg-gradient-to-l from-black to-blue-950 py-4 px-10 rounded-3xl">
+          {currentUser ? (
+            <>
+              <Link to="/profile">
+                <div className="w-9 h-9 rounded-full bg-purple-500 flex items-center justify-center text-white font-semibold hover:opacity-90">
+                  {/* First letter of user name or static initial */}
+                  {currentUser?.email?.charAt(0).toUpperCase() || "U"}
+                </div>
+              </Link>
               <button
                 onClick={handleLogout}
-                className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-lg"
+                className="text-sm bg-purple-500 hover:bg-purple-600 px-3 py-1 rounded-lg"
               >
                 Logout
               </button>
@@ -63,21 +78,24 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-[#2a2a40] px-4 pb-4 space-y-3">
+        <div className="md:hidden bg-gradient-to-l from-black via-blue-950 to-black py-5 rounded-3xl px-4 pb-4 space-y-3 mt-0 flex flex-row">
           {currentUser ? (
             <>
-              <Link to="/home" onClick={toggleMenu}>Home</Link>
-              <Link to="/favorites" className="hover:text-purple-300">Favorites</Link>
-              <Link to="/profile" onClick={toggleMenu}>Profile</Link>
-              <button
+            <ul className='space-y-6'>
+            <li><Link to="/home" onClick={toggleMenu}>Home</Link></li>
+              <li><Link to="/favorites" onClick={toggleMenu}>Favorites</Link></li>
+              <li><Link to="/profile" onClick={toggleMenu}>Profile</Link></li>
+              <li><button
                 onClick={() => {
                   handleLogout();
                   toggleMenu();
                 }}
-                className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-lg"
+                className="bg-blue-600 hover:border-white border hover:text-blue-600 text-white px-3 py-1 rounded-lg"
               >
                 Logout
-              </button>
+              </button></li>
+            </ul>
+              
             </>
           ) : (
             <>

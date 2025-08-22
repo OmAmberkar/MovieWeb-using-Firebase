@@ -4,7 +4,6 @@ import { db } from "../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import toast from "react-hot-toast";
 import { HeartIcon } from "@heroicons/react/24/outline";
-// or for solid
 import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
 
 function MovieCard({ movie }) {
@@ -16,6 +15,7 @@ function MovieCard({ movie }) {
       toast.error("Please login to save favorites");
       return;
     }
+    
 
     try {
       const favRef = doc(
@@ -37,18 +37,28 @@ function MovieCard({ movie }) {
     }
   };
 
+  const hasPoster = movie.Poster && movie.Poster !== "N/A";
+
   return (
     <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 shadow-md hover:shadow-lg transition duration-300">
       <div className="relative">
-        <img
-          src={
-            movie.Poster !== "N/A"
-              ? movie.Poster
-              : "https://via.placeholder.com/300x450?text=No+Image"
-          }
-          alt={movie.Title}
-          className="w-full object-cover rounded-xl mb-3"
-        />
+        {hasPoster ? (
+          <img
+            src={movie.Poster}
+            alt={movie.Title}
+            className="w-80 h-60 object-fit rounded-xl mb-3"
+            style={{ aspectRatio: "2/3" }}
+          />
+        ) : (
+          <div
+            className="w-full bg-gray-800 flex items-center justify-center rounded-xl mb-3"
+            style={{ aspectRatio: "2/3" }}
+          >
+            <span className="text-blue-400 !flex !items-center !text-center px-2 text-sm">
+              {movie.Title}
+            </span>
+          </div>
+        )}
 
         {/* Save Button */}
         <button
@@ -63,6 +73,7 @@ function MovieCard({ movie }) {
         </button>
       </div>
 
+      {/* Movie Info */}
       <h2 className="text-md font-bold truncate">{movie.Title}</h2>
       <p className="text-xs text-gray-300">📅 {movie.Year}</p>
       <p className="text-xs text-yellow-400 mt-1">

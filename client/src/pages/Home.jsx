@@ -40,7 +40,7 @@ function Home() {
           />
           <button
             onClick={() => setQuery(query)} // triggers debounce
-            className="px-5 py-3 rounded-xl bg-yellow-500 hover:bg-yellow-600 text-black font-semibold shadow-md hover:shadow-lg transition"
+            className="px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-900 text-white font-semibold shadow-md hover:shadow-lg transition"
           >
             Search
           </button>
@@ -49,7 +49,7 @@ function Home() {
         {/* Movie Grid */}
         {loading ? (
           <div className="flex justify-center items-center py-20">
-            <div className="w-10 h-10 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : movies.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-x-10 gap-y-20 mx-2">

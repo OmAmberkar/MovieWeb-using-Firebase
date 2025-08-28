@@ -15,6 +15,7 @@ import { useAuth } from "./context/AuthContext"; // ⬅️ import context
 import Navbar from "./components/navbar";
 import { Toaster } from "react-hot-toast";
 import Favorites from "./pages/Favorties";
+import MovieDetails from "./components/MovieDetails";
 
 const NavbarLayout = ({ children }) => {
   const { currentUser } = useAuth();
@@ -30,7 +31,7 @@ const NavbarLayout = ({ children }) => {
 };
 
 function App() {
-  const { loading } = useAuth(); 
+  const { loading } = useAuth();
 
   if (loading) {
     return (
@@ -68,6 +69,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/movie/:id"
+            element={
+              <ProtectedRoute>
+                <MovieDetails />
               </ProtectedRoute>
             }
           />

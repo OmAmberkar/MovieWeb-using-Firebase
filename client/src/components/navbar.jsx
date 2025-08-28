@@ -50,14 +50,14 @@ const Navbar = () => {
           {currentUser ? (
             <>
               <Link to="/profile">
-                <div className="w-9 h-9 rounded-full bg-purple-500 flex items-center justify-center text-white font-semibold hover:opacity-90">
+                <div className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold hover:opacity-90">
                   {/* First letter of user name or static initial */}
                   {currentUser?.email?.charAt(0).toUpperCase() || "U"}
                 </div>
               </Link>
               <button
                 onClick={handleLogout}
-                className="text-sm bg-purple-500 hover:bg-purple-600 px-3 py-1 rounded-lg"
+                className="text-sm  hover:border-blue-600 hover:border-2 px-3 py-2 rounded-lg"
               >
                 Logout
               </button>

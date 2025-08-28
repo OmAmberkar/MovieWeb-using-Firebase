@@ -1,7 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../config/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
+import { auth, db } from "../config/firebase";
 
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
@@ -11,11 +12,34 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-      setLoading(false);
+    // Listen for auth state changes
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Reference to user's Firestore profile
+        const userRef = doc(db, "users", user.uid);
+
+        // Listen in real-time to profile updates
+        const unsubscribeProfile = onSnapshot(userRef, (docSnap) => {
+          if (docSnap.exists()) {
+            setCurrentUser({
+              ...user, // Firebase auth data
+              ...docSnap.data(), // Firestore profile data (username, contact, etc.)
+            });
+          } else {
+            // No profile doc yet → just set Firebase user
+            setCurrentUser(user);
+          }
+          setLoading(false);
+        });
+
+        return unsubscribeProfile; // cleanup Firestore listener
+      } else {
+        setCurrentUser(null);
+        setLoading(false);
+      }
     });
-    return unsubscribe;
+
+    return () => unsubscribeAuth(); // cleanup auth listener
   }, []);
 
   return (

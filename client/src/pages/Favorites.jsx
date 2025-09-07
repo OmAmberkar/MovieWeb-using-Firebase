@@ -38,8 +38,8 @@ const Favorites = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] text-white px-4 py-10">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-l from-[#000000] via-[#011F4B] to-[#000000] text-white py-10">
+      <div className="max-w-6xl mx-auto mt-20">
         <h1 className="text-3xl font-bold mb-6">💾 Your Favorites</h1>
 
         {favorites.length === 0 ? (

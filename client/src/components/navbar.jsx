@@ -41,6 +41,7 @@ const Navbar = () => {
             <>
               <Link to="/home" className="hover:text-purple-300">Home</Link>
               <Link to="/favorites" className="hover:text-purple-300">Favorites</Link>
+              <Link to="/dashboard" className="hover:text-purple-300">Dashboard</Link>
             </>
           )}
         </div>
@@ -84,6 +85,7 @@ const Navbar = () => {
             <ul className='space-y-6'>
             <li><Link to="/home" onClick={toggleMenu}>Home</Link></li>
               <li><Link to="/favorites" onClick={toggleMenu}>Favorites</Link></li>
+              <li><Link to="/dashboard" onClick={toggleMenu}>Dashboard</Link></li>
               <li><Link to="/profile" onClick={toggleMenu}>Profile</Link></li>
               <li><button
                 onClick={() => {

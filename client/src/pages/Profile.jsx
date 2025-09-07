@@ -4,6 +4,7 @@ import { signOut } from "firebase/auth";
 import { auth, db } from "../config/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import Swal from "sweetalert2"; 
+import { errorSwal, infoSwal, successSwal, warningSwal } from "../utils/customSwal";
 
 function Profile() {
   const [username, setUsername] = React.useState("");
@@ -44,21 +45,20 @@ function Profile() {
           bio,
         });
 
-        Swal.fire({
+        successSwal.fire({
           icon: "success",
           title: "Profile Updated!",
         });
-
         navigate("/home");
       } catch (error) {
-        Swal.fire({
+        errorSwal.fire({
           icon: "error",
           title: "Update Failed",
           text: error.message,
         });
       }
     } else {
-      Swal.fire({
+      warningSwal.fire({
         icon: "warning",
         title: "Missing Info",
         text: "Please fill in all fields.",
@@ -69,7 +69,7 @@ function Profile() {
   const logout = async () => {
     try {
       await signOut(auth);
-      Swal.fire({
+      infoSwal.fire({
         icon: "info",
         title: "Logged out",
         text: "You have been logged out successfully.",
@@ -77,7 +77,7 @@ function Profile() {
       navigate("/");
     } catch (error) {
       console.error("Error logging out:", error);
-      Swal.fire({
+      errorSwal.fire({
         icon: "error",
         title: "Logout Error",
         text: error.message,
@@ -91,11 +91,11 @@ function Profile() {
   const avatarUrl = `https://api.dicebear.com/9.x/lorelei/svg?seed=${username || "guest"}`;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-l from-[#000000] via-[#011F4B] to-[#000000] text-white p-6">
       <div className="flex flex-col md:flex-row gap-8 w-full max-w-4xl">
         
         {/* LEFT CARD */}
-        <div className="flex-1 bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700 flex flex-col items-center">
+        <div className="flex-1 backdrop-blur-3xl p-8 rounded-xl shadow-lg border border-gray-700 flex flex-col align-middle justify-center items-center">
           <img 
             src={avatarUrl} 
             alt="Avatar" 
@@ -105,7 +105,7 @@ function Profile() {
           <p className="text-gray-400 text-sm">{contact || "No contact added"}</p>
 
           <button
-            className="mt-6 w-full py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition duration-300"
+            className="mt-6 py-2 px-5 hover:bg-red-600 hover:text-white border-2 border-red-700 text-red-500 rounded-lg font-medium transition duration-300"
             onClick={logout}
           >
             Log Out
@@ -113,13 +113,13 @@ function Profile() {
         </div>
 
         {/* RIGHT CARD */}
-        <div className="flex-1 bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700">
-          <h3 className="text-xl font-semibold mb-4">Edit Profile</h3>
+        <div className="flex-1  backdrop-blur-3xl p-8 rounded-xl shadow-lg border border-gray-700">
+          <h3 className="text-xl font-semibold mb-4 text-center">Edit Profile</h3>
           
           <input
             type="text"
             placeholder="Username"
-            className="w-full mb-4 p-3 rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full mb-4 p-3 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
@@ -128,14 +128,14 @@ function Profile() {
             type="tel"
             placeholder="Contact Number"
             maxLength="10"
-            className="w-full mb-4 p-3 rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full mb-4 p-3 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
             value={contact}
             onChange={(e) => setContact(e.target.value)}
           />
 
           <textarea
-            placeholder="Bio"
-            className="w-full mb-4 p-3 rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+            placeholder="Say something about yourself..."
+            className="w-full mb-4 p-3 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
             rows="3"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
@@ -143,7 +143,7 @@ function Profile() {
 
           <button
             onClick={handleUpdate}
-            className="w-full bg-purple-600 hover:bg-purple-700 p-3 rounded-lg text-white font-semibold transition"
+            className="w-full border-2 text-blue-300 border-purple-600 hover:bg-purple-700 p-3 rounded-lg hover:text-white font-semibold transition"
           >
             Save Changes
           </button>

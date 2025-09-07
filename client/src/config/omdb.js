@@ -14,7 +14,7 @@ export async function getOmdbDetails (imdbId,title)  {
   return res.data
 };
 
-export async function searchMovies(title) {
+export async function searchMoviesO(title) {
   const response = await axios.get(baseURL, {
     params: {
       apikey: omdbApiKey,

@@ -14,8 +14,9 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import { useAuth } from "./context/AuthContext"; // ⬅️ import context
 import Navbar from "./components/navbar";
 import { Toaster } from "react-hot-toast";
-import Favorites from "./pages/Favorties";
+import Favorites from "./pages/Favorites";
 import MovieDetails from "./components/MovieDetails";
+import Dashboard from "./pages/Dashboard";
 
 const NavbarLayout = ({ children }) => {
   const { currentUser } = useAuth();
@@ -77,6 +78,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <MovieDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
               </ProtectedRoute>
             }
           />

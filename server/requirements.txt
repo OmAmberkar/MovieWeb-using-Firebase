@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+motor
+pymongo
+python-dotenv
+openai
+pydantic
+httpx
+httpcore
+starlette
+websockets
+watchfiles
+typing_extensions
+jiter

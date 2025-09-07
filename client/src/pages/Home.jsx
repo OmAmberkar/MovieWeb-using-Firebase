@@ -1,7 +1,8 @@
 // Home.jsx
 import { useState, useEffect } from "react";
 import debounce from "lodash/debounce";
-import { searchMovies } from "../config/omdb";
+import { searchMoviesO } from "../config/omdb";
+import { searchMoviesT } from "../config/tmdb";
 import MovieCard from "../components/MovieCard";
 
 function Home() {
@@ -13,7 +14,9 @@ function Home() {
     const fetchMovies = debounce(async () => {
       if (!query) return;
       setLoading(true);
-      const results = await searchMovies(query);
+      const resultsO = await searchMoviesO(query);
+      const resultsT = await searchMoviesT(query);
+      const results = resultsT && resultsT.length > 0 ? resultsT : resultsO;
       setMovies(results);
       setLoading(false);
     }, 500);
